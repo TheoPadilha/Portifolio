@@ -379,7 +379,14 @@
                 <h2>Projetos em Destaque</h2>
                 <p>Conheça alguns dos projetos que já desenvolvi</p>
             </div>
-            <div class="portfolio-grid">
+            <div class="portfolio-carousel">
+                <button class="carousel-btn prev" aria-label="Projeto anterior">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-btn next" aria-label="Próximo projeto">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <div class="portfolio-grid">
                 <div class="portfolio-card">
                     <div class="portfolio-image">
                         <img src="projetoNutrabake.png" alt="Nutrabake - Cardápio Online">
@@ -437,6 +444,12 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="carousel-indicators">
+                <button class="indicator active" data-slide="0" aria-label="Ir para projeto 1"></button>
+                <button class="indicator" data-slide="1" aria-label="Ir para projeto 2"></button>
+                <button class="indicator" data-slide="2" aria-label="Ir para projeto 3"></button>
+            </div>
             </div>
         </div>
     </section>
@@ -605,7 +618,7 @@
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>Aceito pagamentos via PIX, transferência bancária e cartão de crédito. Geralmente trabalho com 50% de entrada e 50% na entrega do projeto.</p>
+                        <p>Aceito pagamentos via PIX, transferência bancária e parcelamento. Geralmente trabalho com 50% de entrada e 50% na entrega do projeto.</p>
                     </div>
                 </div>
                 <div class="faq-item">

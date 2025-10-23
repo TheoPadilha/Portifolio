@@ -986,10 +986,81 @@ section {
     background: var(--white);
 }
 
+.portfolio-carousel {
+    position: relative;
+    padding: 0 60px;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+}
+
+.carousel-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-btn.prev {
+    left: 0;
+}
+
+.carousel-btn.next {
+    right: 0;
+}
+
+.carousel-btn i {
+    font-size: 20px;
+}
+
 .portfolio-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
+    transition: transform 0.5s ease;
+}
+
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid var(--primary);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.indicator.active {
+    background: var(--primary);
+    width: 30px;
+    border-radius: 6px;
+}
+
+.indicator:hover {
+    background: var(--primary);
+    opacity: 0.7;
 }
 
 .portfolio-card {
@@ -1343,6 +1414,19 @@ section {
         grid-template-columns: 1fr;
     }
 
+    .portfolio-carousel {
+        padding: 0 50px;
+    }
+
+    .carousel-btn {
+        width: 40px;
+        height: 40px;
+    }
+
+    .carousel-btn i {
+        font-size: 16px;
+    }
+
     .process-steps {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -1381,6 +1465,19 @@ section {
     .cta-buttons {
         flex-direction: column;
         align-items: center;
+    }
+
+    .portfolio-carousel {
+        padding: 0 30px;
+    }
+
+    .carousel-btn {
+        width: 35px;
+        height: 35px;
+    }
+
+    .carousel-btn i {
+        font-size: 14px;
     }
 }
 

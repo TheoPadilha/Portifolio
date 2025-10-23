@@ -986,95 +986,13 @@ section {
     background: var(--white);
 }
 
-.portfolio-carousel {
-    position: relative;
-    padding: 0 80px;
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.portfolio-carousel > div {
-    overflow: hidden;
-}
-
-.carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: var(--white);
-    color: var(--primary);
-    border: 2px solid var(--primary);
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 10;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
-}
-
-.carousel-btn:hover {
-    background: var(--primary);
-    color: var(--white);
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
-}
-
-.carousel-btn.prev {
-    left: 10px;
-}
-
-.carousel-btn.next {
-    right: 10px;
-}
-
-.carousel-btn i {
-    font-size: 22px;
-}
-
 .portfolio-grid {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 30px;
-    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    width: 100%;
-    padding: 20px 0;
-}
-
-.carousel-indicators {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 40px;
-}
-
-.indicator {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    border: 2px solid var(--primary);
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    padding: 0;
-}
-
-.indicator.active {
-    background: var(--primary);
-    width: 30px;
-    border-radius: 6px;
-}
-
-.indicator:hover {
-    background: var(--primary);
-    opacity: 0.7;
 }
 
 .portfolio-card {
-    min-width: 100%;
-    flex-shrink: 0;
     background: var(--white);
     border-radius: 20px;
     overflow: hidden;
@@ -1141,9 +1059,6 @@ section {
 
 .portfolio-info {
     padding: 25px;
-    min-height: 180px;
-    display: flex;
-    flex-direction: column;
 }
 
 .portfolio-info h3 {
@@ -1155,7 +1070,6 @@ section {
     color: var(--text-light);
     margin-bottom: 20px;
     line-height: 1.6;
-    flex: 1;
 }
 
 .portfolio-tags {
@@ -1425,17 +1339,8 @@ section {
         margin: 0;
     }
 
-    .portfolio-carousel {
-        padding: 0 60px;
-    }
-
-    .carousel-btn {
-        width: 45px;
-        height: 45px;
-    }
-
-    .carousel-btn i {
-        font-size: 18px;
+    .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .process-steps {
@@ -1478,25 +1383,8 @@ section {
         align-items: center;
     }
 
-    .portfolio-carousel {
-        padding: 0 50px;
-    }
-
-    .carousel-btn {
-        width: 40px;
-        height: 40px;
-    }
-
-    .carousel-btn.prev {
-        left: 5px;
-    }
-
-    .carousel-btn.next {
-        right: 5px;
-    }
-
-    .carousel-btn i {
-        font-size: 16px;
+    .portfolio-grid {
+        grid-template-columns: 1fr;
     }
 }
 

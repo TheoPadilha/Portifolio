@@ -431,6 +431,32 @@ section {
     justify-content: center;
 }
 
+.profile-photo {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 50% 40% 60% 50% / 50% 60% 40% 50%;
+    object-fit: cover;
+    box-shadow: var(--shadow-lg);
+    border: 5px solid var(--primary);
+    transition: all 0.3s ease;
+    animation: float 6s ease-in-out infinite;
+}
+
+.profile-photo:hover {
+    transform: scale(1.05);
+    border-radius: 40% 60% 50% 40% / 60% 50% 60% 40%;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
 .image-placeholder {
     width: 100%;
     max-width: 400px;

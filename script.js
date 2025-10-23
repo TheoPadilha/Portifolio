@@ -383,13 +383,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const nextBtn = document.querySelector('.carousel-btn.next');
     const indicators = document.querySelectorAll('.indicator');
 
+    if (!portfolioGrid || !portfolioCards.length) return;
+
     let currentSlide = 0;
     const totalSlides = portfolioCards.length;
+    let cardsPerView = 3; // padrão desktop
+
+    // Função para calcular quantos cards mostrar baseado na largura da tela
+    function getCardsPerView() {
+        const width = window.innerWidth;
+        if (width <= 768) return 1;      // mobile: 1 card
+        if (width <= 968) return 2;      // tablet: 2 cards
+        return 3;                         // desktop: 3 cards
+    }
 
     // Função para atualizar o carrossel
     function updateCarousel() {
+        cardsPerView = getCardsPerView();
         const cardWidth = portfolioCards[0].offsetWidth;
-        const gap = 30; // gap between cards
+        const gap = 30;
         const offset = currentSlide * (cardWidth + gap);
 
         portfolioGrid.style.transform = `translateX(-${offset}px)`;
@@ -398,44 +410,92 @@ document.addEventListener('DOMContentLoaded', function() {
         indicators.forEach((indicator, index) => {
             indicator.classList.toggle('active', index === currentSlide);
         });
+
+        // Desabilitar botões nos extremos
+        prevBtn.style.opacity = currentSlide === 0 ? '0.5' : '1';
+        prevBtn.style.cursor = currentSlide === 0 ? 'not-allowed' : 'pointer';
+
+        const maxSlide = totalSlides - cardsPerView;
+        nextBtn.style.opacity = currentSlide >= maxSlide ? '0.5' : '1';
+        nextBtn.style.cursor = currentSlide >= maxSlide ? 'not-allowed' : 'pointer';
     }
 
     // Navegação com botões
     prevBtn.addEventListener('click', () => {
-        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-        updateCarousel();
+        if (currentSlide > 0) {
+            currentSlide--;
+            updateCarousel();
+        }
     });
 
     nextBtn.addEventListener('click', () => {
-        currentSlide = (currentSlide + 1) % totalSlides;
-        updateCarousel();
+        const maxSlide = totalSlides - cardsPerView;
+        if (currentSlide < maxSlide) {
+            currentSlide++;
+            updateCarousel();
+        }
     });
 
     // Navegação com indicadores
     indicators.forEach((indicator, index) => {
         indicator.addEventListener('click', () => {
-            currentSlide = index;
+            const maxSlide = totalSlides - cardsPerView;
+            currentSlide = Math.min(index, maxSlide);
             updateCarousel();
         });
     });
 
     // Navegação com teclado
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') {
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        const maxSlide = totalSlides - cardsPerView;
+        if (e.key === 'ArrowLeft' && currentSlide > 0) {
+            currentSlide--;
             updateCarousel();
-        } else if (e.key === 'ArrowRight') {
-            currentSlide = (currentSlide + 1) % totalSlides;
+        } else if (e.key === 'ArrowRight' && currentSlide < maxSlide) {
+            currentSlide++;
             updateCarousel();
         }
     });
 
-    // Auto-play (opcional - descomente para ativar)
-    // setInterval(() => {
-    //     currentSlide = (currentSlide + 1) % totalSlides;
-    //     updateCarousel();
-    // }, 5000);
+    // Touch/Swipe support para mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    portfolioGrid.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+
+    portfolioGrid.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    });
+
+    function handleSwipe() {
+        const maxSlide = totalSlides - cardsPerView;
+        if (touchStartX - touchEndX > 50 && currentSlide < maxSlide) {
+            // Swipe left
+            currentSlide++;
+            updateCarousel();
+        } else if (touchEndX - touchStartX > 50 && currentSlide > 0) {
+            // Swipe right
+            currentSlide--;
+            updateCarousel();
+        }
+    }
 
     // Atualizar ao redimensionar a janela
-    window.addEventListener('resize', updateCarousel);
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            const maxSlide = totalSlides - getCardsPerView();
+            if (currentSlide > maxSlide) {
+                currentSlide = Math.max(0, maxSlide);
+            }
+            updateCarousel();
+        }, 250);
+    });
+
+    // Inicializar
+    updateCarousel();
 });

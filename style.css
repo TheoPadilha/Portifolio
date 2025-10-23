@@ -988,18 +988,19 @@ section {
 
 .portfolio-carousel {
     position: relative;
-    padding: 0 60px;
+    padding: 0 80px;
+    overflow: hidden;
 }
 
 .carousel-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: var(--primary);
-    color: var(--white);
-    border: none;
-    width: 50px;
-    height: 50px;
+    background: var(--white);
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -1007,38 +1008,40 @@ section {
     cursor: pointer;
     z-index: 10;
     transition: all 0.3s ease;
-    box-shadow: var(--shadow);
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
 }
 
 .carousel-btn:hover {
-    background: var(--primary-dark);
+    background: var(--primary);
+    color: var(--white);
     transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
 }
 
 .carousel-btn.prev {
-    left: 0;
+    left: 10px;
 }
 
 .carousel-btn.next {
-    right: 0;
+    right: 10px;
 }
 
 .carousel-btn i {
-    font-size: 20px;
+    font-size: 22px;
 }
 
 .portfolio-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
     gap: 30px;
-    transition: transform 0.5s ease;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    width: 100%;
 }
 
 .carousel-indicators {
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-top: 30px;
+    margin-top: 40px;
 }
 
 .indicator {
@@ -1064,6 +1067,8 @@ section {
 }
 
 .portfolio-card {
+    min-width: calc(33.333% - 20px);
+    flex-shrink: 0;
     background: var(--white);
     border-radius: 20px;
     overflow: hidden;
@@ -1410,21 +1415,21 @@ section {
         margin: 0;
     }
 
-    .portfolio-grid {
-        grid-template-columns: 1fr;
+    .portfolio-carousel {
+        padding: 0 60px;
     }
 
-    .portfolio-carousel {
-        padding: 0 50px;
+    .portfolio-card {
+        min-width: calc(50% - 15px);
     }
 
     .carousel-btn {
-        width: 40px;
-        height: 40px;
+        width: 45px;
+        height: 45px;
     }
 
     .carousel-btn i {
-        font-size: 16px;
+        font-size: 18px;
     }
 
     .process-steps {
@@ -1468,16 +1473,28 @@ section {
     }
 
     .portfolio-carousel {
-        padding: 0 30px;
+        padding: 0 50px;
+    }
+
+    .portfolio-card {
+        min-width: 100%;
     }
 
     .carousel-btn {
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
+    }
+
+    .carousel-btn.prev {
+        left: 5px;
+    }
+
+    .carousel-btn.next {
+        right: 5px;
     }
 
     .carousel-btn i {
-        font-size: 14px;
+        font-size: 16px;
     }
 }
 

@@ -990,6 +990,8 @@ section {
     position: relative;
     padding: 0 80px;
     overflow: hidden;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .carousel-btn {

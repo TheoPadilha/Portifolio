@@ -387,19 +387,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let currentSlide = 0;
     const totalSlides = portfolioCards.length;
-    let cardsPerView = 3; // padrão desktop
-
-    // Função para calcular quantos cards mostrar baseado na largura da tela
-    function getCardsPerView() {
-        const width = window.innerWidth;
-        if (width <= 768) return 1;      // mobile: 1 card
-        if (width <= 968) return 2;      // tablet: 2 cards
-        return 3;                         // desktop: 3 cards
-    }
 
     // Função para atualizar o carrossel
     function updateCarousel() {
-        cardsPerView = getCardsPerView();
         const cardWidth = portfolioCards[0].offsetWidth;
         const gap = 30;
         const offset = currentSlide * (cardWidth + gap);
@@ -410,49 +400,34 @@ document.addEventListener('DOMContentLoaded', function() {
         indicators.forEach((indicator, index) => {
             indicator.classList.toggle('active', index === currentSlide);
         });
-
-        // Desabilitar botões nos extremos
-        prevBtn.style.opacity = currentSlide === 0 ? '0.5' : '1';
-        prevBtn.style.cursor = currentSlide === 0 ? 'not-allowed' : 'pointer';
-
-        const maxSlide = totalSlides - cardsPerView;
-        nextBtn.style.opacity = currentSlide >= maxSlide ? '0.5' : '1';
-        nextBtn.style.cursor = currentSlide >= maxSlide ? 'not-allowed' : 'pointer';
     }
 
-    // Navegação com botões
+    // Navegação com botões (loop infinito)
     prevBtn.addEventListener('click', () => {
-        if (currentSlide > 0) {
-            currentSlide--;
-            updateCarousel();
-        }
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        updateCarousel();
     });
 
     nextBtn.addEventListener('click', () => {
-        const maxSlide = totalSlides - cardsPerView;
-        if (currentSlide < maxSlide) {
-            currentSlide++;
-            updateCarousel();
-        }
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateCarousel();
     });
 
     // Navegação com indicadores
     indicators.forEach((indicator, index) => {
         indicator.addEventListener('click', () => {
-            const maxSlide = totalSlides - cardsPerView;
-            currentSlide = Math.min(index, maxSlide);
+            currentSlide = index;
             updateCarousel();
         });
     });
 
     // Navegação com teclado
     document.addEventListener('keydown', (e) => {
-        const maxSlide = totalSlides - cardsPerView;
-        if (e.key === 'ArrowLeft' && currentSlide > 0) {
-            currentSlide--;
+        if (e.key === 'ArrowLeft') {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
             updateCarousel();
-        } else if (e.key === 'ArrowRight' && currentSlide < maxSlide) {
-            currentSlide++;
+        } else if (e.key === 'ArrowRight') {
+            currentSlide = (currentSlide + 1) % totalSlides;
             updateCarousel();
         }
     });
@@ -471,14 +446,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function handleSwipe() {
-        const maxSlide = totalSlides - cardsPerView;
-        if (touchStartX - touchEndX > 50 && currentSlide < maxSlide) {
-            // Swipe left
-            currentSlide++;
+        if (touchStartX - touchEndX > 50) {
+            // Swipe left (próximo)
+            currentSlide = (currentSlide + 1) % totalSlides;
             updateCarousel();
-        } else if (touchEndX - touchStartX > 50 && currentSlide > 0) {
-            // Swipe right
-            currentSlide--;
+        } else if (touchEndX - touchStartX > 50) {
+            // Swipe right (anterior)
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
             updateCarousel();
         }
     }
@@ -488,10 +462,6 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
-            const maxSlide = totalSlides - getCardsPerView();
-            if (currentSlide > maxSlide) {
-                currentSlide = Math.max(0, maxSlide);
-            }
             updateCarousel();
         }, 250);
     });

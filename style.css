@@ -1067,7 +1067,7 @@ section {
 }
 
 .portfolio-card {
-    min-width: calc(33.333% - 20px);
+    min-width: 100%;
     flex-shrink: 0;
     background: var(--white);
     border-radius: 20px;
@@ -1419,10 +1419,6 @@ section {
         padding: 0 60px;
     }
 
-    .portfolio-card {
-        min-width: calc(50% - 15px);
-    }
-
     .carousel-btn {
         width: 45px;
         height: 45px;
@@ -1474,10 +1470,6 @@ section {
 
     .portfolio-carousel {
         padding: 0 50px;
-    }
-
-    .portfolio-card {
-        min-width: 100%;
     }
 
     .carousel-btn {

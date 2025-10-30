@@ -268,9 +268,16 @@ document.querySelectorAll('.skill-category').forEach(category => {
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
     const heroContent = document.querySelector('.hero-content');
+    const isMobile = window.innerWidth <= 768;
+
     if (heroContent && scrolled < window.innerHeight) {
-        heroContent.style.transform = `translateY(${scrolled * 0.3}px)`;
-        heroContent.style.opacity = 1 - (scrolled / 500);
+        // Slower parallax movement on mobile
+        const parallaxSpeed = isMobile ? 0.15 : 0.3;
+        heroContent.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
+
+        // Slower fade on mobile - hero stays visible longer
+        const fadeSpeed = isMobile ? 1000 : 600;
+        heroContent.style.opacity = 1 - (scrolled / fadeSpeed);
     }
 });
 

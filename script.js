@@ -321,6 +321,112 @@ faqItems.forEach(item => {
     });
 });
 
+// Portfolio Carousel
+let currentSlide = 0;
+const portfolioCards = document.querySelectorAll('.portfolio-card');
+const carouselTrack = document.querySelector('.carousel-track');
+const prevBtn = document.querySelector('.prev-btn');
+const nextBtn = document.querySelector('.next-btn');
+const dotsContainer = document.querySelector('.carousel-dots');
+
+// Create dots
+portfolioCards.forEach((_, index) => {
+    const dot = document.createElement('button');
+    dot.classList.add('carousel-dot');
+    if (index === 0) dot.classList.add('active');
+    dot.setAttribute('aria-label', `Ir para projeto ${index + 1}`);
+    dot.addEventListener('click', () => goToSlide(index));
+    dotsContainer.appendChild(dot);
+});
+
+const dots = document.querySelectorAll('.carousel-dot');
+
+function updateCarousel() {
+    // Update track position
+    carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+    // Update active card
+    portfolioCards.forEach((card, index) => {
+        card.classList.toggle('active', index === currentSlide);
+    });
+
+    // Update active dot
+    dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSlide);
+    });
+}
+
+function goToSlide(index) {
+    currentSlide = index;
+    updateCarousel();
+}
+
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % portfolioCards.length;
+    updateCarousel();
+}
+
+function prevSlide() {
+    currentSlide = (currentSlide - 1 + portfolioCards.length) % portfolioCards.length;
+    updateCarousel();
+}
+
+// Button navigation
+nextBtn.addEventListener('click', nextSlide);
+prevBtn.addEventListener('click', prevSlide);
+
+// Mouse wheel navigation
+let isScrolling = false;
+const carouselContainer = document.querySelector('.portfolio-carousel');
+
+carouselContainer.addEventListener('wheel', (e) => {
+    e.preventDefault();
+
+    if (isScrolling) return;
+    isScrolling = true;
+
+    if (e.deltaY > 0) {
+        nextSlide();
+    } else {
+        prevSlide();
+    }
+
+    setTimeout(() => {
+        isScrolling = false;
+    }, 500);
+}, { passive: false });
+
+// Touch swipe support
+let touchStartX = 0;
+let touchEndX = 0;
+
+carouselContainer.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+});
+
+carouselContainer.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+});
+
+function handleSwipe() {
+    if (touchStartX - touchEndX > 50) {
+        nextSlide();
+    }
+    if (touchEndX - touchStartX > 50) {
+        prevSlide();
+    }
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+        prevSlide();
+    } else if (e.key === 'ArrowRight') {
+        nextSlide();
+    }
+});
+
 // Console message (branding)
 console.log('%c🚀 Site desenvolvido por Theo Padilha', 'color: #6366f1; font-size: 16px; font-weight: bold;');
 console.log('%cDesenvolvedor Fullstack | Páginas Web & Sistemas SaaS', 'color: #64748b; font-size: 12px;');
